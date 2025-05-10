@@ -24,7 +24,29 @@ data = pd.read_csv('share_market_data.csv')
 
 Preprocess data
 data = data.dropna()  # handle missing values
-data['feature1'] = data['close_price'] / data['open_price']  # feature engineering
+data['feature1'] = data['close_price'] / data['open_price']  
+
+3.rnn
+from keras.models import Sequential
+from keras.layers import Dense, SimpleRNN
+import numpy as np
+
+Generate sample data
+X = np.random.rand(100, 10, 1)
+y = np.random.randint(0, 2, 100)
+
+Define RNN model
+model = Sequential()
+model.add(SimpleRNN(50, input_shape=(10, 1)))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+Train model
+model.fit(X, y, epochs=50, batch_size=32, validation_split=0.2)
+
+Evaluate model
+loss, accuracy = model.evaluate(X, y)
+print(f'Loss: {loss:.3f}, Accuracy: {accuracy:.3f}')
 
 Split data
 X_train, X_test, y_train, y_test = train_test_split(data.drop('label', axis=1), data['label'], test_size=0.2, random_state=42)
